@@ -4,13 +4,18 @@ var types;
 var name;
 var rarity;
 
-var page;
+var page = 1;
 
 var pageSize;
 var random;
 
 var data = '';
 var response;
+
+//BOOLS
+var searchAble = true;
+var nextAble = true;
+var prevAble = true;
 
 // INPUTS
 var nameInput = document.getElementById('name');
@@ -46,6 +51,9 @@ var cardPopUp = document.getElementById('cardPopUp');
 // LAYOUT CODE
 var cardLine = false;
 
+// BOTTOM MENU
+var bottomLinks = document.getElementById('bottomLinksContainer');
+
 var HttpClient = function()
 {
   this.get = function(aUrl, aCallback)
@@ -66,6 +74,11 @@ var HttpClient = function()
 // FUNCTIONS
 function search()
 {
+  if(!searchAble)
+  {
+    return
+  }
+  searchAble = false;
   cardPopUp.classList.remove('flex');
   var ulist = document.getElementById("cardList");
   ulist.innerHTML = '';
@@ -75,11 +88,18 @@ function search()
   types = typesInput.value;
   rarity = rarityInput.value;
 
-  data = '';
+  if(page == 1)
+  {
+    data = '';
+  }
+  else
+  {
+    data = 'page='+page;
+  }
 
   if (name != '')
   {
-    data = data.concat('name='+name);
+    data = data.concat('&name='+name);
   }
   if (color != 'Any')
   {
@@ -97,7 +117,6 @@ function search()
   {
     data = data.substring(1);
   }
-
   client = new HttpClient();
   client.get(apiUrl+"?"+data, function(response)
   {
@@ -110,7 +129,9 @@ function search()
     var cardAmount = response.cards.length;
     if(cardAmount > 99)
     {
-      alert('wayoo nieuwe page');
+      bottomLinks.classList.add("show");
+      document.getElementById('nextLink').addEventListener('click', nextPage);
+      document.getElementById('prevLink').addEventListener('click', prevPage);
     }
     if(cardAmount >0)
     {
@@ -140,6 +161,36 @@ function search()
     {
       showError('no result');
     }
+    searchAble = true;
+    prevAble = true;
+    nextAble = true;
+  }
+
+  function nextPage()
+  {
+    if(!nextAble)
+    {
+      return
+    }
+    nextAble = false;
+    page ++;
+    data = data +'&page='+page;
+    search();
+  }
+  function prevPage()
+  {
+    if(!prevAble)
+    {
+      return
+    }
+    prevAble = false;
+    page --;
+    if(page < 1)
+    {
+      page=1;
+    }
+    data = data +'&page='+page;
+    search();
   }
 
   function openCardDetail()
@@ -266,7 +317,6 @@ function search()
 
   function closePop()
   {
-    console.log('lclos');
     cardPopUp.classList.remove('flex');
     cardList.classList.add('show');
   }

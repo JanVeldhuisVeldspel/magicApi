@@ -8,7 +8,7 @@
 html
 {
     background:#ffffff;
-    font-family:'Bahianita', cursive;
+    font-family: sans-serif;
     font-size:62.5%;
     min-height: 100%;
 }
@@ -69,6 +69,7 @@ button:hover
 }
 .controlPanel
 {
+    font-family:'Bahianita', cursive;
     text-align:center;
     background-color:rgba(175,151,110,.5);
     padding:8px;
@@ -183,10 +184,32 @@ button:hover
     width:20px;
     height:20px;
 }
+.underBar
+{
+    text-align: center;
+    background-color:rgba(175,151,110,.5);
+    padding:5px;
+    font-size:1.4rem;
+}
+#bottomLinksContainer
+{
+    display:none;
+}
+.bottomLinks
+{
+    color:rgb(75,51,10);
+    padding-left:2px;
+    padding-right:2px;
+    cursor:pointer;
+}
+.noSel
+{
+    cursor:default;
+}
 /*HELPERS*/
 .show
 {
-    display:block;
+    display:block !important;
 }
 .flex
 {
