@@ -19,11 +19,29 @@ var typesInput = document.getElementById('type');
 var rarityInput = document.getElementById('rarity');
 
 // CARD INFO
-var cards = [];
-
 var cardList = document.getElementById('cardList');
 
-var cardImage;
+var cardImageUrl;
+var cardBackImage = "images/cardBack.png";
+var cardName;
+var cardColors;
+var cardRar;
+var cardTypes;
+var cardText;
+var cardFlavor;
+// var cardSet;
+
+var cardImage = document.getElementById('cardImage');
+var cardTitle = document.getElementById('cardTitle');
+var cardColor = document.getElementById('cardColor');
+var cardRarity = document.getElementById('cardRarity');
+var cardType = document.getElementById('cardType');
+var cardTeks = document.getElementById('cardTeks');
+var cardQuote = document.getElementById('cardQuote');
+// var cardSets = document.getElementById('cardSets');
+
+// CARD POPUP
+var cardPopUp = document.getElementById('cardPopUp');
 
 // LAYOUT CODE
 var cardLine = false;
@@ -48,6 +66,10 @@ var HttpClient = function()
 // FUNCTIONS
 function search()
 {
+  cardPopUp.classList.remove('flex');
+  var ulist = document.getElementById("cardList");
+  ulist.innerHTML = '';
+  cardList.classList.remove('show');
   name = nameInput.value;
   color = colorInput.value;
   types = typesInput.value;
@@ -77,7 +99,6 @@ function search()
   }
 
   client = new HttpClient();
-  console.log(client);
   client.get(apiUrl+"?"+data, function(response)
   {
     response = JSON.parse(response);
@@ -95,7 +116,6 @@ function search()
     {
       for (var i = 0; i < cardAmount; i++)
       {
-          console.log(response.cards[i].name);
           var card = document.createElement("span");
           var ulist = document.getElementById("cardList");
           var newItem = document.createElement("li");
@@ -109,7 +129,8 @@ function search()
           card.textContent = response.cards[i].name;
           card.setAttribute('href', '#');
           card.setAttribute('target', '_blank');
-          // card.addEventListener('click', openCardDetail);
+          card.setAttribute('id', response.cards[i].id);
+          card.addEventListener('click', openCardDetail);
           newItem.appendChild(card);
           ulist.appendChild(newItem);
       }
@@ -117,10 +138,143 @@ function search()
     }
     else
     {
-      console.log('kak');
-      // showError('no result'); NOG DOEN
+      showError('no result');
     }
   }
-  // var data = 'limit='+limit+'&offset='+offset+'&apikey='+apiKey;
-}
 
+  function openCardDetail()
+  {
+    cardImageUrl = cardBackImage;
+    cardImage.src = cardImageUrl;
+    cardColor.innerHTML = "";
+    cardTitle.innerHTML = "";
+    cardRarity.innerHTML = "";
+    cardType.innerHTML = "";
+    cardTeks.innerHTML = "";
+    cardQuote.innerHTML = "";
+    cardList.classList.remove('show');
+    var cardId = this.id;
+    client = new HttpClient();
+    client.get(apiUrl+"/"+cardId, function(response)
+    {
+      response = JSON.parse(response);
+      cardImageUrl = response.card.imageUrl;
+      if(cardImageUrl == "" || cardImageUrl == null)
+      {
+        cardImageUrl = cardBackImage;
+      }
+      cardName = response.card.name;
+      cardColors = response.card.colors;
+      cardRar = response.card.rarity;
+      cardTypes = response.card.type;
+      cardText = response.card.text;
+
+      cardText = cardText.replace(/{B}/g, '<img src="images/Black.svg" class="colorIcon">');
+      cardText = cardText.replace(/{G}/g, '<img src="images/Green.svg" class="colorIcon">');
+      cardText = cardText.replace(/{R}/g, '<img src="images/Red.svg" class="colorIcon">');
+      cardText = cardText.replace(/{W}/g, '<img src="images/White.svg" class="colorIcon">');
+      cardText = cardText.replace(/{U}/g, '<img src="images/Blue.svg" class="colorIcon">');
+      cardText = cardText.replace(/{T}/g, '<img src="images/Tap.svg" class="colorIcon">');
+      cardText = cardText.replace(/{Q}/g, '<img src="images/Untap.svg" class="colorIcon">');
+      cardText = cardText.replace(/{C}/g, '<img src="images/Colorless.svg" class="colorIcon">');
+
+      cardText = cardText.split('{U/R}').join('<img src="images/UR.svg" class="colorIcon">');
+      cardText = cardText.split('{U/B}').join('<img src="images/UB.svg" class="colorIcon">');
+      cardText = cardText.split('{B/G}').join('<img src="images/BG.svg" class="colorIcon">');
+      cardText = cardText.split('{B/R}').join('<img src="images/BR.svg" class="colorIcon">');
+      cardText = cardText.split('{G/W}').join('<img src="images/GW.svg" class="colorIcon">');
+      cardText = cardText.split('{G/U}').join('<img src="images/GU.svg" class="colorIcon">');
+      cardText = cardText.split('{R/G}').join('<img src="images/RG.svg" class="colorIcon">');
+      cardText = cardText.split('{R/W}').join('<img src="images/RW.svg" class="colorIcon">');
+      cardText = cardText.split('{W/B}').join('<img src="images/WB.svg" class="colorIcon">');
+      cardText = cardText.split('{W/U}').join('<img src="images/WU.svg" class="colorIcon">');
+
+      cardText = cardText.split('{0}').join('<img src="images/0.svg" class="colorIcon">');
+      cardText = cardText.split('{1}').join('<img src="images/1.svg" class="colorIcon">');
+      cardText = cardText.split('{2}').join('<img src="images/2.svg" class="colorIcon">');
+      cardText = cardText.split('{3}').join('<img src="images/3.svg" class="colorIcon">');
+      cardText = cardText.split('{4}').join('<img src="images/4.svg" class="colorIcon">');
+      cardText = cardText.split('{6}').join('<img src="images/6.svg" class="colorIcon">');
+      cardText = cardText.split('{7}').join('<img src="images/7.svg" class="colorIcon">');
+      cardText = cardText.split('{8}').join('<img src="images/8.svg" class="colorIcon">');
+      cardText = cardText.split('{9}').join('<img src="images/9.svg" class="colorIcon">');
+      cardText = cardText.split('{10}').join('<img src="images/10.svg" class="colorIcon">');
+      cardText = cardText.split('{11}').join('<img src="images/11.svg" class="colorIcon">');
+      cardText = cardText.split('{12}').join('<img src="images/12.svg" class="colorIcon">');
+      cardText = cardText.split('{13}').join('<img src="images/13.svg" class="colorIcon">');
+      cardText = cardText.split('{14}').join('<img src="images/14.svg" class="colorIcon">');
+      cardText = cardText.split('{16}').join('<img src="images/16.svg" class="colorIcon">');
+      cardText = cardText.split('{17}').join('<img src="images/17.svg" class="colorIcon">');
+      cardText = cardText.split('{18}').join('<img src="images/18.svg" class="colorIcon">');
+      cardText = cardText.split('{19}').join('<img src="images/9.svg" class="colorIcon">');
+      cardText = cardText.split('{20}').join('<img src="images/20.svg" class="colorIcon">');
+
+      cardFlavor = response.card.flavor;
+      if(cardFlavor == "" || cardFlavor == null)
+      {
+        cardFlavor = "";
+      }
+      // cardSet = response.card.setName;
+
+      for (var i = 0; i < cardColors.length; i++)
+      {
+        var icon = document.createElement("img");
+        icon.setAttribute('src', "images/"+cardColors[i]+".svg");
+        icon.classList.add('colorIcon');
+        
+        cardPopUp.classList.remove('bgColorBlack');
+        cardPopUp.classList.remove('bgColorBlue');
+        cardPopUp.classList.remove('bgColorGreen');
+        cardPopUp.classList.remove('bgColorRed');
+        cardPopUp.classList.remove('bgColorWhite');
+
+        if(cardColors[i] == 'Black')
+        {
+          cardPopUp.classList.add('bgColorBlack');
+        }
+        else if(cardColors[i] == 'Blue')
+        {
+          cardPopUp.classList.add('bgColorBlue');
+        }
+        else if(cardColors[i] == 'Green')
+        {
+          cardPopUp.classList.add('bgColorGreen');
+        }
+        else if(cardColors[i] == 'Red')
+        {
+          cardPopUp.classList.add('bgColorRed');
+        }
+        else if(cardColors[i] == 'White')
+        {
+          cardPopUp.classList.add('bgColorWhite');
+        }
+        document.getElementById('cardColor').appendChild(icon);
+      }
+
+      cardImage.src = cardImageUrl;
+      cardTitle.innerHTML = cardName;
+      cardRarity.innerHTML = cardRar;
+      cardType.innerHTML = cardTypes;
+      cardTeks.innerHTML = cardText;
+      cardQuote.innerHTML = cardFlavor;
+      // cardSets.innerHTML = cardSet;
+
+      cardPopUp.classList.add('flex');
+    });
+
+  }
+
+  function closePop()
+  {
+    console.log('lclos');
+    cardPopUp.classList.remove('flex');
+    cardList.classList.add('show');
+  }
+
+  function showError(error)
+  {
+    console.log(error);
+  }
+
+  document.getElementById('closePopup').addEventListener('click', closePop);
+}
