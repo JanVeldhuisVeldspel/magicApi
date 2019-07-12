@@ -19,6 +19,14 @@ var typesInput = document.getElementById('type');
 var rarityInput = document.getElementById('rarity');
 
 // CARD INFO
+var cards = [];
+
+var cardList = document.getElementById('cardList');
+
+var cardImage;
+
+// LAYOUT CODE
+var cardLine = false;
 
 var HttpClient = function()
 {
@@ -53,7 +61,7 @@ function search()
   }
   if (color != 'Any')
   {
-    data = data.concat('&color='+color);
+    data = data.concat('&colors='+color);
   }
   if (types != 'Any')
   {
@@ -73,9 +81,46 @@ function search()
   client.get(apiUrl+"?"+data, function(response)
   {
     response = JSON.parse(response);
-    console.log(response);
-    alert('jaja');
+    parseResponse(response);
   });
 
+  function parseResponse(response)
+  {
+    var cardAmount = response.cards.length;
+    if(cardAmount > 99)
+    {
+      alert('wayoo nieuwe page');
+    }
+    if(cardAmount >0)
+    {
+      for (var i = 0; i < cardAmount; i++)
+      {
+          console.log(response.cards[i].name);
+          var card = document.createElement("span");
+          var ulist = document.getElementById("cardList");
+          var newItem = document.createElement("li");
+          newItem.className = 'cardLi';
+          card.className = 'cardRow';
+          cardLine = !cardLine;
+          if(cardLine)
+          {
+            newItem.classList.add("rowDark");
+          }
+          card.textContent = response.cards[i].name;
+          card.setAttribute('href', '#');
+          card.setAttribute('target', '_blank');
+          // card.addEventListener('click', openCardDetail);
+          newItem.appendChild(card);
+          ulist.appendChild(newItem);
+      }
+      cardList.classList.add('show');
+    }
+    else
+    {
+      console.log('kak');
+      // showError('no result'); NOG DOEN
+    }
+  }
   // var data = 'limit='+limit+'&offset='+offset+'&apikey='+apiKey;
 }
+

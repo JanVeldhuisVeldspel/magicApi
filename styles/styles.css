@@ -71,6 +71,41 @@ button:hover
 {
     border-top:1px solid rgba(175,151,110,1);
 }
+.cardList
+{
+    display:none;
+    margin:10px;
+    border:1px solid rgba(175,151,110,.75);;
+}
+.cardLi
+{
+    display:block;
+    font-size:1.5rem;
+    font-family: sans-serif;
+    width:100%;
+}
+.cardRow
+{
+    display:block;
+    padding:5px;
+    cursor:pointer;
+    transition: background .5s, color .75s;
+}
+.cardRow:hover
+{
+    color:#fff;
+    background-color:rgba(208,32,119,.5);
+}
+.rowDark
+{
+    background-color:rgba(175,151,110,.25);
+}
+
+/*HELPERS*/
+.show
+{
+    display:block;
+}
 /*MEDIA QUERIES*/
 /*@media screen and (max-width: 500px)
 {
