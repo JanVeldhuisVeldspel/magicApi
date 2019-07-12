@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@import url('https://fonts.googleapis.com/css?family=Bahianita&display=swap');
 *
 {
     margin:0;
@@ -8,26 +8,68 @@
 html
 {
     background:#ffffff;
-    font-family: 'Montserrat', sans-serif;
+    font-family:'Bahianita', cursive;
     font-size:62.5%;
     min-height: 100%;
 }
-
+label
+{
+    padding:0 5px;
+}
+input[type=text], select
+{
+    border:solid rgb(175,151,110) 1px;
+    font-size:1.6rem;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    width:20%;
+    padding:5px;
+    font-family: sans-serif;
+}
+select, button
+{
+    width:15%;
+    cursor:pointer;
+}
+button
+{
+    border:solid rgb(175,151,110) 1px;
+    font-size:1.6rem;
+    background: #77d020;
+    color:#fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, .25);
+    padding:5px;
+    transition: background .5s;
+    font-family: sans-serif;
+}
+button:hover
+{
+    background: #56ad1b;
+}
 /*LAYOUT*/
 .wrapper
 {
+    font-size:2.4rem;
     display:block;
     max-width:1000px;
-    border:solid 1px #f0f;
     margin:0 auto;
     margin-top:20px;
-    border-radius:5px;
+    border-radius:8px;
     overflow:hidden;
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .75);
+    -moz-box-shadow:    0px 0px 15px 0px rgba(0, 0, 0, .75);
+    box-shadow:         0px 0px 15px 0px rgba(0, 0, 0, .75);
 }
 .controlPanel
 {
-    border:solid 1px #f00;
     text-align:center;
+    background-color:rgba(175,151,110,.5);
+    padding:8px;
+}
+.informationPanel
+{
+    border-top:1px solid rgba(175,151,110,1);
 }
 /*MEDIA QUERIES*/
 /*@media screen and (max-width: 500px)
