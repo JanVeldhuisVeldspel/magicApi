@@ -16,6 +16,7 @@ var response;
 var searchAble = true;
 var nextAble = true;
 var prevAble = true;
+var multiplePages = false;
 
 // INPUTS
 var nameInput = document.getElementById('name');
@@ -78,6 +79,7 @@ var HttpClient = function()
 // FUNCTIONS
 function searchInit()
 {
+  multiplePages = false;
   page = 1;
   search();
 }
@@ -140,13 +142,17 @@ function search()
     var cardAmount = response.cards.length;
     if(cardAmount > 99)
     {
+      multiplePages = true;
       bottomLinks.classList.add("show");
       document.getElementById('nextLink').addEventListener('click', nextPage);
       document.getElementById('prevLink').addEventListener('click', prevPage);
     }
     else if(cardAmount < 99)
     {
-      bottomLinks.classList.remove("show");
+      if(!multiplePages)
+      {
+        bottomLinks.classList.remove("show");
+      }
     }
     else if(cardAmount < 1)
     {
@@ -299,33 +305,6 @@ function search()
         var icon = document.createElement("img");
         icon.setAttribute('src', "images/"+cardColors[i]+".svg");
         icon.classList.add('colorIcon');
-        
-        cardPopUp.classList.remove('bgColorBlack');
-        cardPopUp.classList.remove('bgColorBlue');
-        cardPopUp.classList.remove('bgColorGreen');
-        cardPopUp.classList.remove('bgColorRed');
-        cardPopUp.classList.remove('bgColorWhite');
-
-        if(cardColors[i] == 'Black')
-        {
-          cardPopUp.classList.add('bgColorBlack');
-        }
-        else if(cardColors[i] == 'Blue')
-        {
-          cardPopUp.classList.add('bgColorBlue');
-        }
-        else if(cardColors[i] == 'Green')
-        {
-          cardPopUp.classList.add('bgColorGreen');
-        }
-        else if(cardColors[i] == 'Red')
-        {
-          cardPopUp.classList.add('bgColorRed');
-        }
-        else if(cardColors[i] == 'White')
-        {
-          cardPopUp.classList.add('bgColorWhite');
-        }
         document.getElementById('cardColor').appendChild(icon);
       }
 
