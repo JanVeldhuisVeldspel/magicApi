@@ -5,7 +5,6 @@ var name;
 var rarity;
 
 var page = 1;
-var tempPage = 1;
 
 var pageSize;
 var random;
@@ -56,6 +55,9 @@ var cardLine = false;
 // BOTTOM MENU
 var bottomLinks = document.getElementById('bottomLinksContainer');
 
+// ERRORS
+var errorPanel = document.getElementById('errorMessage');
+
 var HttpClient = function()
 {
   this.get = function(aUrl, aCallback)
@@ -74,8 +76,15 @@ var HttpClient = function()
 }
 
 // FUNCTIONS
+function searchInit()
+{
+  page = 1;
+  search();
+}
+
 function search()
 {
+  errorPanel.classList.remove('show');
   if(!searchAble)
   {
     return
@@ -139,6 +148,11 @@ function search()
     {
       bottomLinks.classList.remove("show");
     }
+    else if(cardAmount < 1)
+    {
+      page = page - 1;
+      search();
+    }
     if(cardAmount >0)
     {
       for (var i = 0; i < cardAmount; i++)
@@ -165,7 +179,7 @@ function search()
     }
     else
     {
-      showError('no result');
+      showError('Search Returned No Result');
     }
     searchAble = true;
     prevAble = true;
@@ -336,7 +350,8 @@ function search()
 
   function showError(error)
   {
-    console.log(error);
+    errorPanel.innerHTML = error;
+    errorPanel.classList.add('show');
   }
 
   document.getElementById('closePopup').addEventListener('click', closePop);

@@ -42,7 +42,7 @@
                     <option value="Rare">Rare</option>
                     <option value="Mythic">Mythic</option>
                 </select>
-                <button id="submit" onclick="search()">Search</button>
+                <button id="submit" onclick="searchInit()">Search</button>
             </div>
             <div class="informationPanel" id="informationPanel">
                 <ul class="cardList" id="cardList"></ul>
@@ -61,6 +61,7 @@
                     </div>
                     <div class="closePopup" id="closePopup">Back to cards</div>
                 </div>
+                <div class="errorMessage" id="errorMessage">Error</div>
                 <div class="underBar" id="underBar">
                     <div id="bottomLinksContainer" class="bottomLinksContainer">
                         <span class="bottomLinks" id="prevLink">Previous</span>
