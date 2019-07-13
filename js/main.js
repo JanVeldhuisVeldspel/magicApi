@@ -5,6 +5,7 @@ var name;
 var rarity;
 
 var page = 1;
+var tempPage = 1;
 
 var pageSize;
 var random;
@@ -27,7 +28,8 @@ var rarityInput = document.getElementById('rarity');
 var cardList = document.getElementById('cardList');
 
 var cardImageUrl;
-var cardBackImage = "images/cardBack.png";
+var cardBackImageDefault = "images/cardBack.png";
+var cardBackImageNone = "images/cardBackNone.png";
 var cardName;
 var cardColors;
 var cardRar;
@@ -133,6 +135,10 @@ function search()
       document.getElementById('nextLink').addEventListener('click', nextPage);
       document.getElementById('prevLink').addEventListener('click', prevPage);
     }
+    else if(cardAmount < 99)
+    {
+      bottomLinks.classList.remove("show");
+    }
     if(cardAmount >0)
     {
       for (var i = 0; i < cardAmount; i++)
@@ -195,7 +201,7 @@ function search()
 
   function openCardDetail()
   {
-    cardImageUrl = cardBackImage;
+    cardImageUrl = cardBackImageDefault;
     cardImage.src = cardImageUrl;
     cardColor.innerHTML = "";
     cardTitle.innerHTML = "";
@@ -212,7 +218,7 @@ function search()
       cardImageUrl = response.card.imageUrl;
       if(cardImageUrl == "" || cardImageUrl == null)
       {
-        cardImageUrl = cardBackImage;
+        cardImageUrl = cardBackImageNone;
       }
       cardName = response.card.name;
       cardColors = response.card.colors;
@@ -220,45 +226,52 @@ function search()
       cardTypes = response.card.type;
       cardText = response.card.text;
 
-      cardText = cardText.replace(/{B}/g, '<img src="images/Black.svg" class="colorIcon">');
-      cardText = cardText.replace(/{G}/g, '<img src="images/Green.svg" class="colorIcon">');
-      cardText = cardText.replace(/{R}/g, '<img src="images/Red.svg" class="colorIcon">');
-      cardText = cardText.replace(/{W}/g, '<img src="images/White.svg" class="colorIcon">');
-      cardText = cardText.replace(/{U}/g, '<img src="images/Blue.svg" class="colorIcon">');
-      cardText = cardText.replace(/{T}/g, '<img src="images/Tap.svg" class="colorIcon">');
-      cardText = cardText.replace(/{Q}/g, '<img src="images/Untap.svg" class="colorIcon">');
-      cardText = cardText.replace(/{C}/g, '<img src="images/Colorless.svg" class="colorIcon">');
+      if(cardText == "" || cardText == null)
+      {
+        cardText = "";
+      }
+      else
+      {
+        cardText = cardText.replace(/{B}/g, '<img src="images/Black.svg" class="colorIcon">');
+        cardText = cardText.replace(/{G}/g, '<img src="images/Green.svg" class="colorIcon">');
+        cardText = cardText.replace(/{R}/g, '<img src="images/Red.svg" class="colorIcon">');
+        cardText = cardText.replace(/{W}/g, '<img src="images/White.svg" class="colorIcon">');
+        cardText = cardText.replace(/{U}/g, '<img src="images/Blue.svg" class="colorIcon">');
+        cardText = cardText.replace(/{T}/g, '<img src="images/Tap.svg" class="colorIcon">');
+        cardText = cardText.replace(/{Q}/g, '<img src="images/Untap.svg" class="colorIcon">');
+        cardText = cardText.replace(/{C}/g, '<img src="images/Colorless.svg" class="colorIcon">');
 
-      cardText = cardText.split('{U/R}').join('<img src="images/UR.svg" class="colorIcon">');
-      cardText = cardText.split('{U/B}').join('<img src="images/UB.svg" class="colorIcon">');
-      cardText = cardText.split('{B/G}').join('<img src="images/BG.svg" class="colorIcon">');
-      cardText = cardText.split('{B/R}').join('<img src="images/BR.svg" class="colorIcon">');
-      cardText = cardText.split('{G/W}').join('<img src="images/GW.svg" class="colorIcon">');
-      cardText = cardText.split('{G/U}').join('<img src="images/GU.svg" class="colorIcon">');
-      cardText = cardText.split('{R/G}').join('<img src="images/RG.svg" class="colorIcon">');
-      cardText = cardText.split('{R/W}').join('<img src="images/RW.svg" class="colorIcon">');
-      cardText = cardText.split('{W/B}').join('<img src="images/WB.svg" class="colorIcon">');
-      cardText = cardText.split('{W/U}').join('<img src="images/WU.svg" class="colorIcon">');
+        cardText = cardText.split('{U/R}').join('<img src="images/UR.svg" class="colorIcon">');
+        cardText = cardText.split('{U/B}').join('<img src="images/UB.svg" class="colorIcon">');
+        cardText = cardText.split('{B/G}').join('<img src="images/BG.svg" class="colorIcon">');
+        cardText = cardText.split('{B/R}').join('<img src="images/BR.svg" class="colorIcon">');
+        cardText = cardText.split('{G/W}').join('<img src="images/GW.svg" class="colorIcon">');
+        cardText = cardText.split('{G/U}').join('<img src="images/GU.svg" class="colorIcon">');
+        cardText = cardText.split('{R/G}').join('<img src="images/RG.svg" class="colorIcon">');
+        cardText = cardText.split('{R/W}').join('<img src="images/RW.svg" class="colorIcon">');
+        cardText = cardText.split('{W/B}').join('<img src="images/WB.svg" class="colorIcon">');
+        cardText = cardText.split('{W/U}').join('<img src="images/WU.svg" class="colorIcon">');
 
-      cardText = cardText.split('{0}').join('<img src="images/0.svg" class="colorIcon">');
-      cardText = cardText.split('{1}').join('<img src="images/1.svg" class="colorIcon">');
-      cardText = cardText.split('{2}').join('<img src="images/2.svg" class="colorIcon">');
-      cardText = cardText.split('{3}').join('<img src="images/3.svg" class="colorIcon">');
-      cardText = cardText.split('{4}').join('<img src="images/4.svg" class="colorIcon">');
-      cardText = cardText.split('{6}').join('<img src="images/6.svg" class="colorIcon">');
-      cardText = cardText.split('{7}').join('<img src="images/7.svg" class="colorIcon">');
-      cardText = cardText.split('{8}').join('<img src="images/8.svg" class="colorIcon">');
-      cardText = cardText.split('{9}').join('<img src="images/9.svg" class="colorIcon">');
-      cardText = cardText.split('{10}').join('<img src="images/10.svg" class="colorIcon">');
-      cardText = cardText.split('{11}').join('<img src="images/11.svg" class="colorIcon">');
-      cardText = cardText.split('{12}').join('<img src="images/12.svg" class="colorIcon">');
-      cardText = cardText.split('{13}').join('<img src="images/13.svg" class="colorIcon">');
-      cardText = cardText.split('{14}').join('<img src="images/14.svg" class="colorIcon">');
-      cardText = cardText.split('{16}').join('<img src="images/16.svg" class="colorIcon">');
-      cardText = cardText.split('{17}').join('<img src="images/17.svg" class="colorIcon">');
-      cardText = cardText.split('{18}').join('<img src="images/18.svg" class="colorIcon">');
-      cardText = cardText.split('{19}').join('<img src="images/9.svg" class="colorIcon">');
-      cardText = cardText.split('{20}').join('<img src="images/20.svg" class="colorIcon">');
+        cardText = cardText.split('{0}').join('<img src="images/0.svg" class="colorIcon">');
+        cardText = cardText.split('{1}').join('<img src="images/1.svg" class="colorIcon">');
+        cardText = cardText.split('{2}').join('<img src="images/2.svg" class="colorIcon">');
+        cardText = cardText.split('{3}').join('<img src="images/3.svg" class="colorIcon">');
+        cardText = cardText.split('{4}').join('<img src="images/4.svg" class="colorIcon">');
+        cardText = cardText.split('{6}').join('<img src="images/6.svg" class="colorIcon">');
+        cardText = cardText.split('{7}').join('<img src="images/7.svg" class="colorIcon">');
+        cardText = cardText.split('{8}').join('<img src="images/8.svg" class="colorIcon">');
+        cardText = cardText.split('{9}').join('<img src="images/9.svg" class="colorIcon">');
+        cardText = cardText.split('{10}').join('<img src="images/10.svg" class="colorIcon">');
+        cardText = cardText.split('{11}').join('<img src="images/11.svg" class="colorIcon">');
+        cardText = cardText.split('{12}').join('<img src="images/12.svg" class="colorIcon">');
+        cardText = cardText.split('{13}').join('<img src="images/13.svg" class="colorIcon">');
+        cardText = cardText.split('{14}').join('<img src="images/14.svg" class="colorIcon">');
+        cardText = cardText.split('{16}').join('<img src="images/16.svg" class="colorIcon">');
+        cardText = cardText.split('{17}').join('<img src="images/17.svg" class="colorIcon">');
+        cardText = cardText.split('{18}').join('<img src="images/18.svg" class="colorIcon">');
+        cardText = cardText.split('{19}').join('<img src="images/9.svg" class="colorIcon">');
+        cardText = cardText.split('{20}').join('<img src="images/20.svg" class="colorIcon">');
+      }
 
       cardFlavor = response.card.flavor;
       if(cardFlavor == "" || cardFlavor == null)
