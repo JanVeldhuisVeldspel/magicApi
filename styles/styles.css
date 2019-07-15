@@ -60,7 +60,7 @@ button:hover
     display:block;
     max-width:1000px;
     margin:0 auto;
-    margin-top:20px;
+    margin-top:40px;
     border-radius:8px;
     overflow:hidden;
     -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, .75);
@@ -210,10 +210,14 @@ button:hover
     display:flex;
 }
 /*MEDIA QUERIES*/
-/*@media screen and (max-width: 500px)
+@media screen and (max-width: 800px)
 {
-    .charInfoBox
+    html
     {
-        flex-direction:column;
+        font-size:50%;
     }
-}*/
+    .wrapper
+    {
+        margin-top:20px;
+    }
+}
