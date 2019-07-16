@@ -223,6 +223,7 @@ function search()
 
   function openCardDetail()
   {
+    bottomLinks.classList.remove("show");
     cardImageUrl = cardBackImageDefault;
     cardImage.src = cardImageUrl;
     cardColor.innerHTML = "";
@@ -325,6 +326,10 @@ function search()
 
   function closePop()
   {
+    if(multiplePages)
+    {
+      bottomLinks.classList.add("show");
+    }
     cardPopUp.classList.remove('flex');
     cardList.classList.add('show');
   }
