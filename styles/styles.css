@@ -7,7 +7,7 @@
 }
 html
 {
-    background:#ffffff;
+    background-image:url(../images/bg.png);
     font-family: sans-serif;
     font-size:62.5%;
     min-height: 100%;
@@ -71,7 +71,7 @@ button:hover
 {
     font-family:'Bahianita', cursive;
     text-align:center;
-    background-color:rgba(175,151,110,.5);
+    background-color:rgba(228,247,184,.5);
     padding:8px;
 }
 .informationPanel
@@ -81,6 +81,7 @@ button:hover
 .cardList,.cardPopUp
 {
     display:none;
+    background-color:rgba(255,255,160,.3);
     margin:10px;
     border:1px solid rgba(175,151,110,.75);;
 }
@@ -112,7 +113,7 @@ button:hover
 .cardPopUp
 {
     font-family:sans-serif;
-    padding:10px;
+    padding:20px;
     position:relative;
 }
 .closePopup
@@ -130,8 +131,12 @@ button:hover
 }
 .cardImage
 {
-    padding-right: 2rem;
     height:auto;
+    margin-right:30px;
+    border-radius: 12px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, .5);
+    -moz-box-shadow:    0px 0px 5px 0px rgba(0, 0, 0, .5);
+    box-shadow:         0px 0px 5px 0px rgba(0, 0, 0, .5);
 }
 #cardColor,#cardRarity,#cardType,#cardTeks,#cardQuote,#cardSets
 {
